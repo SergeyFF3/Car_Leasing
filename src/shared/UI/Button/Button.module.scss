@@ -1,0 +1,35 @@
+.Button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: .2s;
+  
+  &:hover {
+    background: #111;
+  }
+
+  &:active {
+    background: #575757;
+  }
+}
+
+.passive {
+  background: #E5E5E5;
+}
+
+.disabled {
+  background: rgba(255, 149, 20, 0.4);
+}
+
+.span {
+  position: absolute;
+  z-index: 2;
+  bottom: auto;
+  left: auto;
+  transform: scale(1);
+}

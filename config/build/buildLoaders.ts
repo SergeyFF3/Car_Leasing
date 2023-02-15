@@ -23,6 +23,17 @@ export function buildLoaders({isDev}: BuildOptions): webpack.RuleSetRule[] {
         ],
     }
 
+    const fontLoader = {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        use: {
+            loader: "file-loader",
+            options: {
+                name: 'fonts/[name].[ext]'
+            }
+        },
+        type: 'asset/resource',
+    }
+
     const typescriptLoader = {
         test: /\.tsx?$/,
         use: 'ts-loader',
@@ -31,6 +42,7 @@ export function buildLoaders({isDev}: BuildOptions): webpack.RuleSetRule[] {
 
     return [
         typescriptLoader,
-        cssLoader
+        cssLoader,
+        fontLoader
     ]
 }
