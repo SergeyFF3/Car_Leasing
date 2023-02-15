@@ -30,7 +30,6 @@ select {
 .container {
   max-width: 1360px;
   width: 100%;
-  padding: 0 5px;
   margin: 0 auto;
 }
 
@@ -54,16 +53,20 @@ select {
 }
 
 .input {
-  width: 100%;
   height: 68px;
-  background: #F3F3F4;
-  border-radius: 16px;
-  border: none;
-  margin-bottom: 51px;
+  margin-bottom: 20px;
+}
+
+.range {
+  position: relative;
+  width: 100%;
+  padding: 0 20px;
+  top: -34.5px;
 }
 
 .number {
   font-family: 'Nekst-Black', sans-serif;
+  margin-bottom: 44px;
   font-style: normal;
   font-weight: 900;
   font-size: 54px;
@@ -76,6 +79,7 @@ select {
   height: 68px;
   background: #FF9514;
   border-radius: 40px;
+  margin-bottom: 40px;
   font-family: 'Nekst-Black', sans-serif;
   font-style: normal;
   font-weight: 900;
@@ -84,4 +88,45 @@ select {
   color: white;
   border: none;
   width: 100%;
+}
+
+
+@media (min-width: 1120px) {
+  .app {
+    padding: 213px 9px 5px 9px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    padding: 64px 9px 5px 9px;
+  }
+}
+
+@media (min-width: 320px) {
+  .app {
+    padding: 44px 26px 5px 26px;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .input {
+    height: 60px;
+  }
+
+  .text {
+    margin-bottom: 8px;
+  }
+
+  .number {
+    font-size: 22px;
+    margin-bottom: 29px;
+  }
+
+  .btn {
+    height: 60px;
+    font-size: 22px;
+  }
 }
