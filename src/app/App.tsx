@@ -3,10 +3,6 @@ import './styles/index.scss'
 import Button from "../shared/UI/Button/Button";
 import {classNames} from "../shared/helpers/classNames/classNames";
 
-const fs = require("fs");
-let data = fs.readFileSync("data.json");
-let myObject = JSON.parse(data);
-
 export default function App() {
 
     const [cost, setCost] = React.useState<number>(1500000)
@@ -49,18 +45,58 @@ export default function App() {
     }
 
     const [percent, setPercent] = React.useState<number>(0)
+
     function percentPayment(costCar: number, initPay: number) {
         return initPay * 100 / costCar
     }
 
     const [monPayment, setMonPayment] = React.useState<number>(0)
+
     function monthlyPayment(costCar: number, initPay: number, termCredit: number) {
         return (costCar - initPay * (0.05 * Math.pow(1.05, termCredit)) / Math.pow(1.05, termCredit) - 1)
     }
 
     const [finalSum, setFinalSum] = React.useState<number>(0)
+
     function sumLeasing(initPay: number, termCredit: number, monPay: number) {
         return (termCredit * monPay + initPay)
+    }
+
+    // function sendResultingData(
+    //     costCar: number,
+    //     initPay: number,
+    //     termCredit: number,
+    //     monPay: number,
+    //     sumAmount: number) {
+    //     const obj = {
+    //         coastCar: "Стоимость автомобиля:" + costCar,
+    //         initialPayment: "Первоначальный взнос:" + initPay,
+    //         termLeasing: "Срок лизинга:" + termCredit,
+    //         monthPayment:"Ежемесячный платеж:" +  monPay,
+    //         contractAmount: "Сумма договора лизинга:" + sumAmount
+    //     }
+    //
+    //     for (let key in obj) {
+    //         alert( obj[key])
+    //         if (typeof obj[key] === 'object') {
+    //
+    //         }
+    //     }
+    //    return alert(JSON.stringify(obj))
+    // }
+
+    function alertClick(
+        costCar: number,
+        initPay: number,
+        termCredit: number,
+        monPay: number,
+        sumAmount: number
+    ) {
+        alert(`Стоимость автомобиля: ${costCar}
+             Первоначальный взнос: ${initPay}
+             Срок лизинга: ${termCredit}
+             Ежемесячный платеж: ${monPay}
+             Сумма договора лизинга: ${sumAmount}`)
     }
 
     React.useEffect(() => {
@@ -175,6 +211,7 @@ export default function App() {
                     <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center flex-column">
                         <Button
                             className={classNames("btn", {}, [])}
+                            onClick={() => alertClick(cost, contribution, term, monPayment, finalSum)}
                         >
                             Оставить заявку
                         </Button>
