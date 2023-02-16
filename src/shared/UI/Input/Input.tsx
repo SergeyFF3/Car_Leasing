@@ -6,47 +6,46 @@ type InputType = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange
 
 interface InputProps extends InputType {
     className?: string
-    classNameRange?: string
     value?: string | number
-    onChange?: (value: string) => void
-    readOnly?: boolean
+    onChange?: (value: string | number) => void
+    width?: number
 }
 
 const Input = (props: InputProps) => {
 
     const {
         disabled,
+        width,
         className,
-        classNameRange,
         onChange,
         value,
         type,
+        min,
+        max,
+        step,
         ...otherProps
     } = props
 
-    const rangeInputs = document.querySelectorAll('input[type="range"]')
-    const numberInput = document.querySelector('input[type="number"]')
+    // const rangeInputs = document.querySelectorAll('input[type="range"]')
+    //
+    // function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    //     inputRange = e.target
+    //     if (e.target.type !== 'range') {
+    //         target = document.getElementById('range') as HTMLInputElement
+    //     }
+    //     const min = Number(target.min)
+    //     const max = Number(target.max)
+    //     const val = Number(target.value)
+    //
+    //     target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
+    // }
 
-    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-        let target = e.target
-        if (e.target.type !== 'range') {
-            target = document.getElementById('range')
-        }
-        const min = target.min
-        const max = target.max
-        const val = target.value
-
-        target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
-    }
-
-    rangeInputs.forEach(input => {
-        input.addEventListener('input', handleInputChange)
-    })
-
-    numberInput.addEventListener('input', handleInputChange)
+    // rangeInputs.forEach((input) => {
+    //     input.addEventListener('input', handleInputChange)
+    // })
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange?.(e.target.value)
+        onChange?.(e.target.valueAsNumber)
     }
 
     const mods: Mods = {
@@ -55,11 +54,14 @@ const Input = (props: InputProps) => {
 
         return (
             <input
-                className={classNames("", mods, [className])}
+                className={classNames(cls.Input, mods, [className])}
                 value={value}
                 type={type}
                 disabled={disabled}
                 onChange={onChangeHandler}
+                max={max}
+                min={min}
+                step={step}
                 {...otherProps}
             />
         )
