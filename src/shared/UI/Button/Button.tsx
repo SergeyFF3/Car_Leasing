@@ -3,7 +3,7 @@ import cls from './Button.module.scss'
 import {classNames, Mods} from "../../helpers/classNames/classNames";
 import Loader, {SizeLoader} from '../../Loader/Loader';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children?: ReactNode
     className?: string
     disabled?: boolean
@@ -36,15 +36,16 @@ export default function Button(props: ButtonProps) {
                 </span>
             </button>
         )
-    } else {
-        return (
-            <button
-                className={classNames(cls.Button, mods, [className])}
-                type='button'
-                {...otherProps}
-            >
-                {children}
-            </button>
-        );
     }
+
+    return (
+        <button
+            className={classNames(cls.Button, mods, [className])}
+            type='button'
+            {...otherProps}
+        >
+            {children}
+        </button>
+    );
+
 };

@@ -2,6 +2,7 @@ import React from "react";
 import './styles/index.scss'
 import Button from "../shared/UI/Button/Button";
 import {classNames} from "../shared/helpers/classNames/classNames";
+import CostLeasing from "../entities/CostLeasing/CostLeasing";
 
 export default function App() {
 
@@ -50,10 +51,18 @@ export default function App() {
         return initPay * 100 / costCar
     }
 
+    function initPayPercent() {
+        return +percent.toLocaleString('ru', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }) + "%"
+    }
+
     const [monPayment, setMonPayment] = React.useState<number>(0)
 
-    function monthlyPayment(costCar: number, initPay: number, termCredit: number) {
-        return (costCar - initPay * (0.05 * Math.pow(1.05, termCredit)) / Math.pow(1.05, termCredit) - 1)
+    function monthlyPayment(costCar: number, p: number, termCredit: number) {
+        p /= 1200
+        return costCar * p / (1 - Math.pow(1 + p, -termCredit))
     }
 
     const [finalSum, setFinalSum] = React.useState<number>(0)
@@ -61,29 +70,6 @@ export default function App() {
     function sumLeasing(initPay: number, termCredit: number, monPay: number) {
         return (termCredit * monPay + initPay)
     }
-
-    // function sendResultingData(
-    //     costCar: number,
-    //     initPay: number,
-    //     termCredit: number,
-    //     monPay: number,
-    //     sumAmount: number) {
-    //     const obj = {
-    //         coastCar: "Стоимость автомобиля:" + costCar,
-    //         initialPayment: "Первоначальный взнос:" + initPay,
-    //         termLeasing: "Срок лизинга:" + termCredit,
-    //         monthPayment:"Ежемесячный платеж:" +  monPay,
-    //         contractAmount: "Сумма договора лизинга:" + sumAmount
-    //     }
-    //
-    //     for (let key in obj) {
-    //         alert( obj[key])
-    //         if (typeof obj[key] === 'object') {
-    //
-    //         }
-    //     }
-    //    return alert(JSON.stringify(obj))
-    // }
 
     function alertClick(
         costCar: number,
@@ -104,7 +90,7 @@ export default function App() {
     }, [percent, cost, contribution])
 
     React.useEffect(() => {
-        setMonPayment(monthlyPayment(cost, contribution, term))
+        setMonPayment(monthlyPayment(cost, 9.5, term))
     }, [monPayment, cost, contribution, term])
 
     React.useEffect(() => {
@@ -118,95 +104,74 @@ export default function App() {
                     Рассчитайте стоимость <br/> автомобиля в лизинг</h1>
                 <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <p className="text">Стоимость автомобиля</p>
-                        <input
-                            type="number"
-                            className="Input"
+                        <CostLeasing
+                            className={classNames("", {}, ["spanCost"])}
                             value={cost}
-                            onBlur={onBlurCost}
                             onChange={onChangeCost}
+                            onBlur={onBlurCost}
+                            text="Стоимость автомобиля"
+                            styleRange={getBackgroundCost}
+                            spanText="₽"
+                            min="0"
+                            max="10000000"
+                            step="1000"
                         />
-                        <div className="range">
-                            <input
-                                type="range"
-                                min="0"
-                                max="10000000"
-                                step="1000"
-                                value={cost}
-                                style={getBackgroundCost()}
-                                onChange={onChangeCost}
-                            />
-                            <span className="spanCost">₽</span>
-                        </div>
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <p className="text">Первоначальный взнос</p>
-                        <input
-                            type="number"
-                            className="Input"
-                            value={contribution.toFixed(0)}
+                        <CostLeasing
+                            className={classNames("", {}, ["spanContr"])}
+                            text="Первоначальный взнос"
+                            value={contribution}
                             onChange={onChangeContribution}
                             onBlur={onBlurContribution}
+                            styleRange={getBackgroundContribution}
+                            spanFunc={initPayPercent}
+                            min="0"
+                            max="6000000"
+                            step="1000"
                         />
-                        <div className="range">
-                            <input
-                                type="range"
-                                min="0"
-                                max="6000000"
-                                step="1000"
-                                value={contribution}
-                                style={getBackgroundContribution()}
-                                onChange={onChangeContribution}
-                            />
-                            <span className="spanContr">{percent.toLocaleString('ru', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0,
-                            })}%</span>
-                        </div>
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <p className="text">Срок лизинга</p>
-                        <input
-                            type="number"
-                            className="Input"
-                            value={term.toFixed(0)}
+                        <CostLeasing
+                            className={classNames("", {}, ["spanTerm"])}
+                            text="Срок лизинга"
+                            value={term}
                             onChange={onChangeTerm}
                             onBlur={onBlurTerm}
+                            styleRange={getBackgroundTerm}
+                            spanText="мес."
+                            min="0"
+                            max="120"
+                            step="5"
                         />
-                        <div className="range">
-                            <input
-                                type="range"
-                                min="0"
-                                max="120"
-                                step="5"
-                                value={term}
-                                style={getBackgroundTerm()}
-                                onChange={onChangeTerm}
-                            />
-                            <span className="spanTerm">мес.</span>
-                        </div>
                     </div>
                 </div>
                 <div className="row d-flex flex-wrap">
                     <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 d-flex align-items-start flex-column">
                         <p className="text">Сумма договора лизинга</p>
-                        <h1 className="number">{finalSum.toLocaleString('ru', {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 0,
-                            style: "currency",
-                            currency: "RUB"
-                        })}</h1>
+                        {term === 0
+                            ? <h1 className="number">Неверные данные</h1>
+                            : <h1 className="number">
+                                {finalSum.toLocaleString('ru', {
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0,
+                                    style: "currency",
+                                    currency: "RUB"
+                                })}
+                            </h1>}
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 d-flex align-items-start flex-column">
                         <p className="text">Ежемесячный платеж от</p>
-                        <h1 className="number">
-                            {monPayment.toLocaleString('ru', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0,
-                                style: "currency",
-                                currency: "RUB"
-                            })}
-                        </h1>
+                        {term === 0
+                            ? <h1 className="number">Неверные данные</h1>
+                            : <h1 className="number">
+                                {monPayment.toLocaleString('ru', {
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0,
+                                    style: "currency",
+                                    currency: "RUB"
+                                })}
+                            </h1>}
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center flex-column">
                         <Button

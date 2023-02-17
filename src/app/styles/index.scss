@@ -5,7 +5,6 @@
 @import "global/utils.css";
 @import "fonts";
 
-
 * {
   margin: 0;
   padding: 0;
@@ -50,118 +49,6 @@ select {
   line-height: 20px;
   color: #575757;
   margin-bottom: 24px;
-}
-
-.range {
-  position: relative;
-  width: 100%;
-  padding: 0 25px;
-  top: -34.5px;
-}
-
-.Input {
-  position: relative;
-  font-family: 'Nekst-Black', sans-serif;
-  font-style: normal;
-  font-weight: 900;
-  background: #F3F3F4;
-  border-radius: 16px;
-  border: none;
-  color: #575757;
-  font-size: 30px;
-  line-height: 36px;
-  width: 100%;
-  height: 68px;
-  margin-bottom: 20px;
-  padding: 16px 110px 16px 25px;
-
-  &:focus {
-    border: 2px solid #F3F3F4;
-    background: #fff;
-    outline: none;
-  }
-}
-
-.disabled {
-  opacity: 0.4;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none; // Yeah, yeah everybody write about it
-}
-
-input[type='number'],
-input[type="number"]:hover,
-input[type="number"]:focus {
-  appearance: none;
-  -moz-appearance: textfield;
-}
-
-input[type='range'] {
-  -webkit-appearance: none;
-  cursor: pointer;
-  background: #E1E1E1;
-  width: 100%;
-  height: 2px;
-  background-image: linear-gradient(#FF9514, #FF9514);
-  background-repeat: no-repeat;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
-  &:hover {
-    height: 1px;
-  }
-}
-
-input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  background-color: #FF9514;
-  border-radius: 50%;
-  border: none;
-  transition: background .1s;
-
-  &:active {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-  }
-}
-
-input[type='range']::-moz-range-track {
-  -moz-appearance: none;
-  cursor: pointer;
-  width: 100%;
-  height: 2px;
-  transition: background .1s;
-  background-image: linear-gradient(#FF9514, #FF9514);
-  background-repeat: no-repeat;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
-  &:hover {
-    height: 1px;
-  }
-}
-
-input[type='range']::-moz-range-thumb {
-  -moz-appearance: none;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: none;
-  background-color: #FF9514;
-  transition: .1s;
-
-  &:active {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-  }
 }
 
 .spanCost {
@@ -248,12 +135,6 @@ input[type='range']::-moz-range-thumb {
 
   .title {
     font-size: 34px;
-  }
-
-  .Input {
-    height: 60px;
-    font-size: 22px;
-    padding: 16px 90px 16px 20px;
   }
 
   .spanCost {
